@@ -31,6 +31,7 @@ export function createZoomBehavior() {
     this._zoomBehavior = zoomBehavior;
     var g = d3.select(svg.node().querySelector("g"));
     svg.call(zoomBehavior);
+    svg.on("dblclick.zoom", null);
     if (!this._active) {
         translateZoomBehaviorTransform.call(this, g);
     }
