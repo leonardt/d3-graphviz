@@ -35,6 +35,7 @@ export function createZoomBehavior() {
     if (!this._active) {
         translateZoomBehaviorTransform.call(this, g);
     }
+    this._originalTransform = zoomTransform(svg.node());
 
     return this;
 };
@@ -56,7 +57,14 @@ export function translateZoomTransform(selection) {
     var dy = newTranslation.y - oldTranslation.y;
     return zoomTransform(this._zoomSelection.node()).translate(dx, dy);
 }
+
 export function translateZoomBehaviorTransform(selection) {
     this._zoomBehavior.transform(this._zoomSelection, translateZoomTransform.call(this, selection));
     this._translation = selection.datum().translation;
+}
+
+export function resetZoom() {
+    this._zoomSelection.call(this._zoomBehavior.transform, this._originalTransform);
+
+    return this;
 }
